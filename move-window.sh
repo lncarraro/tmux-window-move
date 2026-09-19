@@ -28,7 +28,7 @@ else
 fi
 
 if [[ -z "$session" || -z "$current_id" ]]; then
-    show_message 'tmux-window-move: não foi possível identificar a janela atual'
+    show_message 'tmux-window-move: unable to identify the current window'
     exit 0
 fi
 
@@ -36,12 +36,12 @@ current_index="$(tmux display-message -p -t "$current_id" '#{window_index}' 2>/d
 window_indices="$(tmux list-windows -t "$session" -F '#{window_index}' 2>/dev/null)"
 
 if [[ ! "$current_index" =~ ^[0-9]+$ || -z "$window_indices" ]]; then
-    show_message 'tmux-window-move: não foi possível ler as janelas'
+    show_message 'tmux-window-move: unable to read the windows'
     exit 0
 fi
 
 if ! grep -Fxq "$target_index" <<< "$window_indices"; then
-    show_message "tmux-window-move: índice $target_index não existe"
+    show_message "tmux-window-move: index $target_index does not exist"
     exit 0
 fi
 
@@ -65,7 +65,7 @@ restore_renumber_windows() {
 trap restore_renumber_windows EXIT
 
 tmux set-option -g renumber-windows off >/dev/null 2>&1 || {
-    show_message 'tmux-window-move: não foi possível mover a janela'
+    show_message 'tmux-window-move: unable to move the window'
     exit 0
 }
 
@@ -74,28 +74,28 @@ move_window() {
 }
 
 if ! move_window "$current_id" "$session:$temporary_index"; then
-    show_message 'tmux-window-move: não foi possível mover a janela'
+    show_message 'tmux-window-move: unable to move the window'
     exit 0
 fi
 
 if (( current_index < target_index )); then
     for ((index = current_index + 1; index <= target_index; index++)); do
         if ! move_window "$session:$index" "$session:$((index - 1))"; then
-            show_message 'tmux-window-move: não foi possível mover a janela'
+            show_message 'tmux-window-move: unable to move the window'
             exit 0
         fi
     done
 else
     for ((index = current_index - 1; index >= target_index; index--)); do
         if ! move_window "$session:$index" "$session:$((index + 1))"; then
-            show_message 'tmux-window-move: não foi possível mover a janela'
+            show_message 'tmux-window-move: unable to move the window'
             exit 0
         fi
     done
 fi
 
 if ! move_window "$current_id" "$session:$target_index"; then
-    show_message 'tmux-window-move: não foi possível mover a janela'
+    show_message 'tmux-window-move: unable to move the window'
     exit 0
 fi
 
