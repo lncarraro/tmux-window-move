@@ -15,7 +15,7 @@ show_message() {
     fi
 }
 
-if [[ ! "$target_index" =~ ^[1-9]$ ]]; then
+if [[ ! "$target_index" =~ ^[0-9]$ ]]; then
     exit 0
 fi
 

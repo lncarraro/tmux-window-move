@@ -12,7 +12,7 @@ Press:
 prefix + m + index
 ```
 
-The target index must be a number from `1` to `9`.
+The target index must be a single digit from `0` to `9` and must already exist in the current session. The available indices depend on tmux's `base-index` setting: a 1-based setup starts at `1`, while a 0-based setup starts at `0`.
 
 For example, with window 2 selected:
 
@@ -41,7 +41,7 @@ Reload the tmux configuration and press `prefix + I` to install the plugins:
 tmux source-file ~/.tmux.conf
 ```
 
-The default tmux prefix is `Ctrl-b`. If you use a different prefix, such as `Ctrl-a`, use it as usual. After installation, the command is available as `prefix + m + 1` through `prefix + m + 9`.
+The default tmux prefix is `Ctrl-b`. If you use a different prefix, such as `Ctrl-a`, use it as usual. After installation, the command is available as `prefix + m + 0` through `prefix + m + 9`.
 
 ## Manual installation
 
